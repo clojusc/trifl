@@ -1,5 +1,5 @@
 (defproject clojusc/trifl "0.1.0-SNAPSHOT"
-  :description "The utility library that dares not speaks its name"
+  :description "The Clojure utility library that dares not speaks its name"
   :url "https://github.com/clojusc/trifl"
   :license {
     :name "Apache License, Version 2.0"
