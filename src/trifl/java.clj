@@ -2,7 +2,8 @@
   (:require [clojure.java.io :as io]
             [clojure.pprint :refer [print-table]]
             [clojure.reflect :refer [reflect]])
-  (:import [java.util.UUID]))
+  (:import [java.util.UUID]
+           [java.lang.management ManagementFactory]))
 
 (defn add-shutdown-handler [func]
   (.addShutdownHook (Runtime/getRuntime)
@@ -22,3 +23,23 @@
 
 (defn uuid4 []
   (str (java.util.UUID/randomUUID)))
+
+(defn dump-all-threads
+  ([]
+    (dump-all-threads (ManagementFactory/getThreadMXBean)))
+  ([thread-bean]
+    (dump-all-threads thread-bean true true))
+  ([thread-bean locked-monitors locked-synchronizers]
+    (.dumpAllThreads thread-bean locked-monitors locked-synchronizers)))
+
+(defn thread->text
+  [thread-info]
+  (.toString thread-info))
+
+(defn dump-threads
+  ([]
+    (dump-threads (dump-all-threads)))
+  ([threads]
+    (->> threads
+         (into [])
+         (map thread->text))))
