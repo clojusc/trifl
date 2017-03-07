@@ -12,7 +12,13 @@
 *The Clojure utility library that dares not speaks its name*
 
 
-## About
+#### Table of Contents
+
+* [About](#about-)
+* [License](#license-)
+
+
+## About [&#x219F;](#contents)
 
 Tired of copying and pasting the same sets of tiny functions in different
 projects.
@@ -20,9 +26,7 @@ projects.
 
 ## License [&#x219F;](#contents)
 
-Copyright © 2016, Clojure-Aided Enrichment Center
-
-Copyright © 2016, Element 84, Inc.
+Copyright © 2017, Clojure-Aided Enrichment Center
 
 Apache License, Version 2.0.
 
@@ -41,4 +45,3 @@ Apache License, Version 2.0.
 [jdk-v]: https://img.shields.io/badge/jdk-1.7+-blue.svg
 [clojars]: https://clojars.org/clojusc/trifl
 [clojars-badge]: https://img.shields.io/clojars/v/clojusc/trifl.svg
-[clojure ini]: https://github.com/jonase/clojure-ini
