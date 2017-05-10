@@ -12,7 +12,7 @@
     :test {
       :plugins [
         [jonase/eastwood "0.2.3" :exclusions [org.clojure/clojure]]
-        [lein-kibit "0.1.3" :exclusions [org.clojure/clojure]]]}
+        [lein-kibit "0.1.5" :exclusions [org.clojure/clojure]]]}
     :dev {
       :source-paths ["dev-resources/src"]
       :repl-options {
