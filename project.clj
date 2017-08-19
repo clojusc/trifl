@@ -10,9 +10,10 @@
     :uberjar {
       :aot :all}
     :test {
+      :exclusions [org.clojure/clojure]
       :plugins [
-        [jonase/eastwood "0.2.3" :exclusions [org.clojure/clojure]]
-        [lein-kibit "0.1.5" :exclusions [org.clojure/clojure]]
+        [jonase/eastwood "0.2.3"]
+        [lein-kibit "0.1.5"]
         [lein-ancient "0.6.10"]]}
     :dev {
       :source-paths ["dev-resources/src"]
@@ -20,4 +21,13 @@
         :init-ns trifl.dev}
       :dependencies [
         [org.clojure/tools.namespace "0.2.11"
-         :exclusions [org.clojure/clojure]]]}})
+         :exclusions [org.clojure/clojure]]]}}
+  :aliases {
+    "check-deps" ["with-profile" "+test" "ancient" "check" "all"]
+    "lint" ["with-profile" "+test" "kibit"]
+    "build" ["with-profile" "+test" "do"
+      ["check-deps"]
+      ["lint"]
+      ["test"]
+      ["compile"]
+      ["uberjar"]]})
