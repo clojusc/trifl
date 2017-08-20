@@ -52,6 +52,10 @@
       last
       keyword))
 
+(defn parent
+  [fs-obj]
+  (.getParent fs-obj))
+
 (defn expand-home
   [^String dir]
   (if (.startsWith dir "~")
