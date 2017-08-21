@@ -68,9 +68,17 @@
   "Creates a unique temporary directory on the filesystem under the
   JVM tmpdir."
   ([]
-    (mk-tmp-dir! "ngap-nowa-clj-"))
+    (mk-tmp-dir! "clojusc-tmpfile-"))
   ([prefix]
     (let [base-dir (sys-prop "java.io.tmpdir")
           tmp-path-obj (io/file base-dir (str prefix (uuid4)))]
-      (io/make-parents tmp-path-obj)
+      (io/make-parents (str tmp-path-obj "/dummy"))
       (abs-path tmp-path-obj))))
+
+(defn write-tmp-file!
+  [filename data]
+  (let [file-path (str (mk-tmp-dir!) "/" filename)]
+    (with-open [writer (io/writer file-path)]
+      (.write writer data)
+      (.flush writer)
+      file-path)))
