@@ -2,7 +2,10 @@
   (:require [clojure.java.io :as io]
             [clojure.string :as string]
             [trifl.core :refer [sys-prop]]
-            [trifl.java :refer [uuid4]]))
+            [trifl.java :refer [uuid4]])
+  (:refer-clojure :exclude [name]))
+
+(def extension-separator ".")
 
 (defn dir?
   [fs-obj]
@@ -30,6 +33,29 @@
   [fs-obj]
   (.getAbsolutePath fs-obj))
 
+(defn name
+  [fs-obj]
+  (.getName fs-obj))
+
+(defn split-name
+  [fs-obj]
+  (let [base-name (trifl.fs/name fs-obj)
+        idx (.lastIndexOf base-name extension-separator)]
+    (if (pos? idx)
+      [(subs base-name 0 idx) (subs base-name (inc idx))]
+      [base-name ""])))
+
+(defn extension
+  [fs-obj]
+  (-> fs-obj
+      (split-name)
+      last
+      keyword))
+
+(defn parent
+  [fs-obj]
+  (.getParent fs-obj))
+
 (defn expand-home
   [^String dir]
   (if (.startsWith dir "~")
@@ -42,9 +68,17 @@
   "Creates a unique temporary directory on the filesystem under the
   JVM tmpdir."
   ([]
-    (mk-tmp-dir! "ngap-nowa-clj-"))
+    (mk-tmp-dir! "clojusc-tmpfile-"))
   ([prefix]
     (let [base-dir (sys-prop "java.io.tmpdir")
           tmp-path-obj (io/file base-dir (str prefix (uuid4)))]
-      (io/make-parents tmp-path-obj)
+      (io/make-parents (str tmp-path-obj "/dummy"))
       (abs-path tmp-path-obj))))
+
+(defn write-tmp-file!
+  [filename data]
+  (let [file-path (str (mk-tmp-dir!) "/" filename)]
+    (with-open [writer (io/writer file-path)]
+      (.write writer data)
+      (.flush writer)
+      file-path)))
