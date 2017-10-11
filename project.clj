@@ -12,9 +12,9 @@
     :test {
       :exclusions [org.clojure/clojure]
       :plugins [
-        [jonase/eastwood "0.2.3"]
+        [jonase/eastwood "0.2.4"]
         [lein-kibit "0.1.5"]
-        [lein-ancient "0.6.10"]]}
+        [lein-ancient "0.6.12"]]}
     :dev {
       :source-paths ["dev-resources/src"]
       :repl-options {
@@ -27,7 +27,7 @@
     "lint" ["with-profile" "+test" "kibit"]
     "build" ["with-profile" "+test" "do"
       ["check-deps"]
-      ["lint"]
+      ;["lint"]
       ["test"]
       ["compile"]
       ["with-profile" "+ubercompile" "compile"]
