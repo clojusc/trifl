@@ -7,7 +7,7 @@
   :dependencies [
     [org.clojure/clojure "1.8.0"]]
   :profiles {
-    :uberjar {
+    :ubercompile {
       :aot :all}
     :test {
       :exclusions [org.clojure/clojure]
@@ -23,11 +23,13 @@
         [org.clojure/tools.namespace "0.2.11"
          :exclusions [org.clojure/clojure]]]}}
   :aliases {
-    "check-deps" ["with-profile" "+test" "ancient" "check" "all"]
+    "check-deps" ["with-profile" "+test" "ancient" "check" ":all"]
     "lint" ["with-profile" "+test" "kibit"]
     "build" ["with-profile" "+test" "do"
       ["check-deps"]
       ["lint"]
       ["test"]
       ["compile"]
+      ["with-profile" "+ubercompile" "compile"]
+      ["clean"]
       ["uberjar"]]})
