@@ -4,6 +4,7 @@
   :license {
     :name "Apache License, Version 2.0"
     :url "http://www.apache.org/licenses/LICENSE-2.0"}
+  :excludsions [org.clojure/clojure]
   :dependencies [
     [org.clojure/clojure "1.8.0"]]
   :profiles {
