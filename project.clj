@@ -21,11 +21,20 @@
       :repl-options {
         :init-ns trifl.dev}
       :dependencies [
-        [org.clojure/tools.namespace "0.2.11"
-         :exclusions [org.clojure/clojure]]]}}
+        [org.clojure/tools.namespace "0.2.11"]]}}
   :aliases {
-    "check-deps" ["with-profile" "+test" "ancient" "check" ":all"]
-    "lint" ["with-profile" "+test" "kibit"]
+    "check-deps" [
+      "with-profile" "+test" "ancient" "check" ":all"]
+    "kibit" [
+      "with-profile" "+test" "do"
+        ["shell" "echo" "== Kibit =="]
+        ["kibit"]]
+    "outlaw" [
+      "with-profile" "+test"
+      "eastwood" "{:namespaces [:source-paths] :source-paths [\"src\"]}"]
+    "lint" [
+      "with-profile" "+test" "do"
+        ["check"] ["kibit"] ["outlaw"]]
     "build" ["with-profile" "+test" "do"
       ["check-deps"]
       ;["lint"]
