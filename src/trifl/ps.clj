@@ -4,6 +4,8 @@
     [clojure.string :as string]
     [trifl.core :as core]))
 
+;;;   Single Process Functions   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defn get-pid
   "Linux/Mac only!"
   [process]
@@ -12,6 +14,13 @@
     (.getInt process-field process)))
 
 ;;;   Process Table Data Structure   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn- pid-str->pid-int
+  [pid]
+  (try
+    (core/->int pid)
+    (catch NumberFormatException ex
+      "")))
 
 (defn- output-format->keys
   [output-fields]
@@ -25,7 +34,7 @@
     "pid,ppid,pgid,comm"
     (let [[pid ppid pgid & cmd] (string/split (string/trim output-line) #"\s+")]
       (conj
-        (mapv core/->int [pid ppid pgid])
+        (mapv pid-str->pid-int [pid ppid pgid])
         (string/join " " cmd)))))
 
 (defn- output-line->map

@@ -9,6 +9,7 @@
             [trifl.fs :as fs]
             [trifl.java :as java]
             [trifl.meta :as meta]
-            [trifl.net :as net]))
+            [trifl.net :as net]
+            [trifl.ps :as process]))
 
 (def show-methods #'trifl.java/show-methods)
