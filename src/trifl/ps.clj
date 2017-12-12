@@ -22,17 +22,32 @@
     (catch NumberFormatException ex
       "")))
 
+(defn- percent->float
+  [percent]
+  (try
+    (new Float percent)
+    (catch NumberFormatException ex
+      "")))
+
 (defn- output-format->keys
   [output-fields]
   (->> #","
        (string/split output-fields)
        (mapv (comp keyword string/trim))))
 
+(defn- split-fields
+  [output-line]
+  (string/split (string/trim output-line) #"\s+"))
+
 (defn- parse-output-line
   [output-format output-line]
   (case output-format
+    "%cpu,%mem"
+    (let [[cpu mem] (split-fields output-line)]
+      (mapv percent->float [cpu mem]))
+
     "pid,ppid,pgid,comm"
-    (let [[pid ppid pgid & cmd] (string/split (string/trim output-line) #"\s+")]
+    (let [[pid ppid pgid & cmd] (split-fields output-line)]
       (conj
         (mapv pid-str->pid-int [pid ppid pgid])
         (string/join " " cmd)))))
@@ -46,15 +61,25 @@
   [output-format output-lines]
   (map (partial output-line->map output-format) output-lines))
 
+(defn parse-ps-info
+  [output-format result]
+  (->> result
+       :out
+       (string/split-lines)
+       (output-lines->ps-info output-format)))
+
 (defn get-ps-info
   ([]
     (get-ps-info "pid,ppid,pgid,comm"))
   ([output-format]
     (->> output-format
          (shell/sh "ps" "-eo")
-         :out
-         (string/split-lines)
-         (output-lines->ps-info output-format))))
+         (parse-ps-info output-format)))
+  ([output-format pid]
+    (->> output-format
+         (shell/sh "ps" "-p" (str pid) "-o")
+         (parse-ps-info output-format)
+         last)))
 
 ;;;   Process Descendants   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
