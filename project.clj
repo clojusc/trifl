@@ -4,18 +4,21 @@
   :license {
     :name "Apache License, Version 2.0"
     :url "http://www.apache.org/licenses/LICENSE-2.0"}
-  :excludsions [org.clojure/clojure]
+  :exclusions [org.clojure/clojure]
   :dependencies [
-    [org.clojure/clojure "1.8.0"]]
+    [org.clojure/clojure "1.9.0"]]
   :profiles {
     :ubercompile {
       :aot :all}
     :test {
-      :exclusions [org.clojure/clojure]
+      :dependencies [
+        [clj-http "3.7.0"]
+        [com.amazonaws/aws-java-sdk-s3 "1.11.28"]
+        [slingshot "0.12.2"]]
       :plugins [
         [jonase/eastwood "0.2.5"]
-        [lein-kibit "0.1.6"]
-        [lein-ancient "0.6.14"]]}
+        [lein-ancient "0.6.15" :exclusions [clj-http com.amazonaws/aws-java-sdk-s3]]
+        [lein-kibit "0.1.6"]]}
     :dev {
       :source-paths ["dev-resources/src"]
       :repl-options {
