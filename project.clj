@@ -24,7 +24,8 @@
       :repl-options {
         :init-ns trifl.dev}
       :dependencies [
-        [org.clojure/tools.namespace "0.2.11"]]}}
+        [org.clojure/tools.namespace "0.2.11"]
+        [org.clojure/data.xml "0.0.8"]]}}
   :aliases {
     "check-deps" [
       "with-profile" "+test" "ancient" "check" ":all"]
