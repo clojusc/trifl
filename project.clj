@@ -1,27 +1,31 @@
-(defproject clojusc/trifl "0.2.0"
+(defproject clojusc/trifl "0.3.0-SNAPSHOT"
   :description "The Clojure utility library that dares not speaks its name"
   :url "https://github.com/clojusc/trifl"
   :license {
     :name "Apache License, Version 2.0"
     :url "http://www.apache.org/licenses/LICENSE-2.0"}
-  :excludsions [org.clojure/clojure]
+  :exclusions [org.clojure/clojure]
   :dependencies [
-    [org.clojure/clojure "1.8.0"]]
+    [org.clojure/clojure "1.9.0"]]
   :profiles {
     :ubercompile {
       :aot :all}
     :test {
-      :exclusions [org.clojure/clojure]
+      :dependencies [
+        [clj-http "3.7.0"]
+        [com.amazonaws/aws-java-sdk-s3 "1.11.28"]
+        [slingshot "0.12.2"]]
       :plugins [
-        [jonase/eastwood "0.2.4"]
-        [lein-kibit "0.1.5"]
-        [lein-ancient "0.6.12"]]}
+        [jonase/eastwood "0.2.5"]
+        [lein-ancient "0.6.15" :exclusions [clj-http com.amazonaws/aws-java-sdk-s3]]
+        [lein-kibit "0.1.6"]]}
     :dev {
       :source-paths ["dev-resources/src"]
       :repl-options {
         :init-ns trifl.dev}
       :dependencies [
-        [org.clojure/tools.namespace "0.2.11"]]}}
+        [org.clojure/tools.namespace "0.2.11"]
+        [org.clojure/data.xml "0.0.8"]]}}
   :aliases {
     "check-deps" [
       "with-profile" "+test" "ancient" "check" ":all"]

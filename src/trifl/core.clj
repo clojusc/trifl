@@ -5,7 +5,9 @@
 (defn ->int
   "Convert a string to an integer."
   [^String str-int]
-  (Integer/parseInt str-int))
+  (if (= "" str)
+    nil
+    (Integer/parseInt str-int)))
 
 (defn bool
   "This differs from the Clojure `boolean` function in that, here, the
