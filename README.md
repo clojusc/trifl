@@ -9,7 +9,7 @@
 
 [![][logo]][logo-large]
 
-*The Clojure utility library that dares not speaks its name*
+*The Clojure utility library that dares not speak its name*
 
 
 #### Table of Contents
