@@ -1,4 +1,6 @@
-(ns trifl.net)
+(ns trifl.net
+  (:require
+    [clojure.string :as string]))
 
 (defn get-local-host
   "Get the java.net.InetAddress object for the local host."
@@ -17,3 +19,9 @@
   Uses the `java.net.InetAddress` method `getHostName`."
   []
   (.getHostName (get-local-host)))
+
+(defn get-short-local-hostname
+  []
+  (-> (get-local-hostname)
+      (clojure.string/split #"\.")
+      first))
