@@ -5,8 +5,7 @@
 (defn ->int
   "Convert a string to an integer."
   [^String str-int]
-  (if (= "" str)
-    nil
+  (when (= "" str)
     (Integer/parseInt str-int)))
 
 (defn bool

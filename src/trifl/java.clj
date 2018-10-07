@@ -34,7 +34,7 @@
 
 (defn thread->text
   [thread-info]
-  (.toString thread-info))
+  (str thread-info))
 
 (defn dump-threads
   ([]

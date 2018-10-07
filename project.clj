@@ -55,14 +55,13 @@
     "eastwood" ["with-profile" "+lint" "eastwood" "{:namespaces [:source-paths]}"]
     "lint" ["do"
       ["kibit"]
-      ;["eastwood"]
-      ]
+      ["eastwood"]]
     "ltest" ["with-profile" "+test" "ltest"]
     ;; Build
     "build" ^{:doc "Perform build steps."} ["do"
       ["clean"]
       ["ubercompile"]
       ["check-vers"]
-      ;["lint"]
-      ["ltest"]
+      ["lint"]
+      ["ltest" ":all"]
       ["uberjar"]]})
