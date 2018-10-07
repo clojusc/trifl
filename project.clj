@@ -10,11 +10,25 @@
   :profiles {
     :ubercompile {
       :aot :all}
-    :test {
+    :lint {
+      :source-paths ^:replace ["src"]
+      :test-paths ^:replace []
       :plugins [
-        [jonase/eastwood "0.2.5"]
+        [jonase/eastwood "0.3.1"]
         [lein-ancient "0.6.15"]
-        [lein-kibit "0.1.6"]]}
+        [lein-bikeshed "0.5.1"]
+        [lein-kibit "0.1.6"]
+        [lein-shell "0.5.0"]
+        [venantius/yagni "0.1.6"]]}
+    :test {
+      :aot :all
+      :plugins [
+        [lein-ltest "0.3.0"]]
+      :test-selectors {
+        :default :unit
+        :unit :unit
+        :system :system
+        :integration :integration}}
     :dev {
       :source-paths ["dev-resources/src"]
       :repl-options {
