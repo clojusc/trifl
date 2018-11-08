@@ -1,16 +1,20 @@
 (ns trifl.java
-  (:require [clojure.java.io :as io]
-            [clojure.pprint :refer [print-table]]
-            [clojure.reflect :refer [reflect]])
-  (:import [java.util.UUID]
-           [java.lang.management ManagementFactory]))
+  (:require
+    [clojure.java.io :as io]
+    [clojure.pprint :refer [print-table]]
+    [clojure.reflect :refer [reflect]])
+  (:import
+    (java.util UUID)
+    (java.lang.management ManagementFactory)))
 
 (defn add-shutdown-handler [func]
   (.addShutdownHook (Runtime/getRuntime)
-                    (Thread. func)))
+                    (new Thread func)))
 
 (defn join-current-thread []
   (.join (Thread/currentThread)))
+
+(def daemonize join-current-thread)
 
 (defn show-methods
   "Display a Java object's public methods."
@@ -22,7 +26,7 @@
               (:members (reflect obj))))))
 
 (defn uuid4 []
-  (str (java.util.UUID/randomUUID)))
+  (str (UUID/randomUUID)))
 
 (defn dump-all-threads
   ([]
